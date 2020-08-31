@@ -1,0 +1,22 @@
+{
+  "name": "memory-game",
+  "version": "1.0.0",
+  "description": "For this assignment, you’ll be building a memory game in the browser using HTML, CSS, and JavaScript. Your goal is to build a card-based memory game.",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/aquifzubair2/memory-game.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/aquifzubair2/memory-game/issues"
+  },
+  "homepage": "https://gitlab.com/aquifzubair2/memory-game#readme",
+  "dependencies": {
+    "jsdoc": "^3.6.5"
+  }
+}
