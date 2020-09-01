@@ -1,7 +1,11 @@
 const gameContainer = document.getElementById("game");
 const headers = document.getElementById("header-id");
 
-document.getElementsByClassName('btn')[0].addEventListener('click', ()=> window.location.reload())
+document.getElementsByClassName('btn')[0].addEventListener('click', 
+()=> {
+  localStorage.removeItem('currentNumOfClicks');
+  window.location.reload()
+})
 let myStorage = document.localStorage;
 
 const arrayOfGifAddress = [
@@ -33,7 +37,7 @@ const arrayOfGifAddress = [
 
 
 /**
- * Function to shuarrayOfGifAddress of array.<br>
+ * Function to shuffle array of Gif Addresses.<br>
  * Based on an algorithm called Fisher Yates.
  * @param {array} array of colours
  * @return {array} array of shuffled array
@@ -60,7 +64,7 @@ function shuffle(array) {
   return array;
 }
 
-let shuarrayOfGifAddress = shuffle(arrayOfGifAddress);
+let shuffleArrayOfGifAddress = shuffle(arrayOfGifAddress);
 
 /**
  * Function loops over the array of colors<br>
@@ -95,32 +99,31 @@ let handleDelay = false;
 let totalNumberOfClick = 0;
 
 /**
- * Method to handle events for every events.
+ * Method to handle events for every click.
  * @param {event} Event of an element
  * 
  */
 
 function handleCardClick(event) {
   // you can use event.target to see which element was clicked
-  if (handleDelay) return;
+  if (handleDelay) return; 
 
   if (firstClick) {
-    firstClickDiv = event.target;
-    firstClickDiv.style.backgroundImage = firstClickDiv.className;
-    firstClickDiv.style.backgroundSize = '100% 100%'
-    firstClickDiv.style.pointerEvents = "none";
+    totalNumberOfClick++;
+    updateClickCount();
+    firstClickDiv = event.target;    
     firstClick = false;
+    setCardStyle(firstClickDiv)    
+  } 
+  
+  else {
     totalNumberOfClick++;
-  } else {
-    event.target.style.backgroundImage = event.target.className;
-    event.target.style.backgroundSize = '100% 100%'
-    event.target.style.pointerEvents = "none";
-    handleDelay = true;
-    totalNumberOfClick++;
+    handleDelay = true; 
+    updateClickCount();
+    setCardStyle(event.target);       
     isCardMatch(firstClickDiv, event.target);
   }
-
-  if (count === COLORS.length/2) {
+  if (count === arrayOfGifAddress.length/2) {
     const lastNumberOfTap = localStorage.getItem('numberOfTap')
     if(totalNumberOfClick < +lastNumberOfTap){
       localStorage.setItem('numberOfTap', `${totalNumberOfClick}`);
@@ -130,13 +133,35 @@ function handleCardClick(event) {
 }
 
 /**
+ * Function to set the styles of card
+ * @param {Object} eventTarget is the object which is the element of click.
+ * @returns {} Changes the style of target element.
+ */
+function setCardStyle(eventTarget) {
+  eventTarget.style.backgroundImage = eventTarget.className;
+  eventTarget.style.backgroundSize = '100% 100%';
+  eventTarget.style.pointerEvents = "none";
+  
+}
+
+/**
+ * Function to update the click count on every click.
+ * @returns {} updated text Content of current score.
+ */
+function updateClickCount() {
+  document.getElementsByClassName('h3-update')[0]
+  .textContent = `Current Score :-  ${totalNumberOfClick}`;
+}
+
+
+/**
  * function to restart the game and showing the winning message.
  * @returns {} Show the confirmation alert to restart the message.
  */
-
 function restartGame() {
   setTimeout(() => {
     if (confirm("You won the game, Do you wanna Restart the game")) {
+      localStorage.removeItem('currentNumOfClicks');
       window.location.reload();
     }
   }, 1000);
@@ -148,14 +173,16 @@ function restartGame() {
  * @param {Object} secondCard: target Object of second div
  * @return {} returns if both target color is same then colour will be there and remove the event listener else colour would be vanished.
  */
-
 function isCardMatch(firstCard, secondCard) {
+
   if (firstCard.className === secondCard.className) {
     secondCard.removeEventListener("click", handleCardClick);
     firstCard.removeEventListener("click", handleCardClick);
     firstClick = true;
     count++;
-  } else {
+  } 
+  
+  else {
     setTimeout(() => {
       secondCard.style.backgroundImage = "";
       firstCard.style.backgroundImage = "";
@@ -164,6 +191,7 @@ function isCardMatch(firstCard, secondCard) {
     }, 1000);
     firstClick = true;
   }
+
   setTimeout(() => (handleDelay = false), 1000);
 }
 
@@ -176,9 +204,13 @@ function addPlayerScore() {
   let textNode = document.createTextNode(`Your highest score is ${localStorage.getItem('numberOfTap')}`);
   playerScore.appendChild(textNode);
   headers.appendChild(playerScore);
+
+  let playerCurrentScore = document.createElement('h3');
+  playerCurrentScore.classList.add('h3-update');  
+  headers.appendChild(playerCurrentScore);
 }
 
-addPlayerScore();
 
 // when the DOM loads
-createDivsForGifs(shuarrayOfGifAddress);
+addPlayerScore();
+createDivsForGifs(shuffleArrayOfGifAddress);

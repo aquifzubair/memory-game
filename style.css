@@ -18,14 +18,13 @@ header {
   display: flex;
   justify-content: space-evenly;
   height:5vh;
+  margin:auto;
 }
 
 h1 {
   align-self: center;
   color:white;
-  margin-top:40px;
-  /* margin:auto; */
-  
+  margin-top:40px;  
 }
 
 h3 {
@@ -53,4 +52,6 @@ h3 {
   width:120px;
   transition: ease-in-out;
 }
+
+
 
