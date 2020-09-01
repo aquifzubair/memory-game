@@ -1,11 +1,7 @@
 const gameContainer = document.getElementById("game");
 const headers = document.getElementById("header-id");
 
-document.getElementsByClassName('btn')[0].addEventListener('click', 
-()=> {
-  localStorage.removeItem('currentNumOfClicks');
-  window.location.reload()
-})
+document.getElementsByClassName('btn')[0].addEventListener('click', ()=> window.location.reload() )
 let myStorage = document.localStorage;
 
 const arrayOfGifAddress = [
@@ -140,8 +136,7 @@ function handleCardClick(event) {
 function setCardStyle(eventTarget) {
   eventTarget.style.backgroundImage = eventTarget.className;
   eventTarget.style.backgroundSize = '100% 100%';
-  eventTarget.style.pointerEvents = "none";
-  
+  eventTarget.style.pointerEvents = "none";  
 }
 
 /**
@@ -201,12 +196,13 @@ function isCardMatch(firstCard, secondCard) {
  */
 function addPlayerScore() {
   let playerScore = document.createElement('h3');  
-  let textNode = document.createTextNode(`Your highest score is ${localStorage.getItem('numberOfTap')}`);
+  let textNode = document.createTextNode(`Highest score :- ${localStorage.getItem('numberOfTap')}`);
   playerScore.appendChild(textNode);
   headers.appendChild(playerScore);
 
   let playerCurrentScore = document.createElement('h3');
   playerCurrentScore.classList.add('h3-update');  
+  playerCurrentScore.textContent = `Current Score :-  ${totalNumberOfClick}`;
   headers.appendChild(playerCurrentScore);
 }
 
