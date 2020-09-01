@@ -156,7 +156,6 @@ function updateClickCount() {
 function restartGame() {
   setTimeout(() => {
     if (confirm("You won the game, Do you wanna Restart the game")) {
-      localStorage.removeItem('currentNumOfClicks');
       window.location.reload();
     }
   }, 1000);
@@ -171,6 +170,7 @@ function restartGame() {
 function isCardMatch(firstCard, secondCard) {
 
   if (firstCard.className === secondCard.className) {
+    successSound();
     secondCard.removeEventListener("click", handleCardClick);
     firstCard.removeEventListener("click", handleCardClick);
     firstClick = true;
@@ -178,6 +178,7 @@ function isCardMatch(firstCard, secondCard) {
   } 
   
   else {
+    errorSound();
     setTimeout(() => {
       secondCard.style.backgroundImage = "";
       firstCard.style.backgroundImage = "";
@@ -219,4 +220,21 @@ function renderPage () {
   addPlayerScore();
 }
 
+/**
+ * Function to generate sound if cards doesn't match.
+ * @returns Generate the error sound.
+ */
+function errorSound(){
+  let errorAudio = new Audio("./sounds/error-sound.mp3");
+  errorAudio.play();
+}
+
+/**
+ * Function to generate sound if cards matches.
+ * @returns Generate the success sound.
+ */
+function successSound() {
+  let successAudio = new Audio("./sounds/matchingSound.mp3")
+  successAudio.play();
+}
 
