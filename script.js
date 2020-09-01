@@ -206,7 +206,17 @@ function addPlayerScore() {
   headers.appendChild(playerCurrentScore);
 }
 
+let startButton = document.getElementById("start");
+startButton.addEventListener('click',renderPage);
 
-// when the DOM loads
-addPlayerScore();
-createDivsForGifs(shuffleArrayOfGifAddress);
+/**
+ * Function to render page on start button click.
+ * @returns main page of game and display the start button null.
+ */
+function renderPage () {
+  startButton.style.display="none"
+  createDivsForGifs(shuffleArrayOfGifAddress)
+  addPlayerScore();
+}
+
+
