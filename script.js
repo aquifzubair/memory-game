@@ -140,13 +140,15 @@ function setCardStyle(eventTarget) {
 }
 
 /**
- * Function to update the click count on every click.
- * @returns {} updated text Content of current score.
+ * Function to update the click count on every click and save it to local storage.
+ * @returns {} updated text Content of current score and save it to local storage.
  */
 function updateClickCount() {
   document.getElementsByClassName('h3-update')[0]
   .textContent = `Current Score :-  ${totalNumberOfClick}`;
+  localStorage.setItem('numberOfTap', `${totalNumberOfClick}`);
 }
+
 
 
 /**
