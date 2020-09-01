@@ -120,9 +120,10 @@ function handleCardClick(event) {
     isCardMatch(firstClickDiv, event.target);
   }
   if (count === arrayOfGifAddress.length/2) {
-    const lastNumberOfTap = localStorage.getItem('numberOfTap')
+    const lastNumberOfTap = localStorage.getItem('numberOfTaps')
+    localStorage.setItem('numberOfTaps', `${totalNumberOfClick}`)
     if(totalNumberOfClick < +lastNumberOfTap){
-      localStorage.setItem('numberOfTap', `${totalNumberOfClick}`);
+      localStorage.setItem('numberOfTaps', `${totalNumberOfClick}`);
     }
     restartGame();
   }
@@ -146,7 +147,7 @@ function setCardStyle(eventTarget) {
 function updateClickCount() {
   document.getElementsByClassName('h3-update')[0]
   .textContent = `Current Score :-  ${totalNumberOfClick}`;
-  localStorage.setItem('numberOfTap', `${totalNumberOfClick}`);
+  
 }
 
 
@@ -199,7 +200,7 @@ function isCardMatch(firstCard, secondCard) {
  */
 function addPlayerScore() {
   let playerScore = document.createElement('h3');  
-  let textNode = document.createTextNode(`Highest score :- ${localStorage.getItem('numberOfTap')}`);
+  let textNode = document.createTextNode(`Highest score :- ${localStorage.getItem('numberOfTaps')}`);
   playerScore.appendChild(textNode);
   headers.appendChild(playerScore);
 
